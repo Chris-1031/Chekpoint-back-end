@@ -8,14 +8,14 @@ datasource db {
 }
 
 model marques {
-  idmarques Int     @id @default(autoincrement())
+  idmarques Int     @id 
   name      String? @db.VarChar(45)
   image    Bytes?  @db.Blob
   model     model?
 }
 
 model model {
-  idmodel  Int       @id @default(autoincrement())
+  idmodel  Int       @id
   name     String?   @db.VarChar(45)
   date     DateTime? @db.DateTime(0)
   moteur   String?   @db.VarChar(45)
