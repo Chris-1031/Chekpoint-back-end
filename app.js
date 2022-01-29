@@ -5,8 +5,8 @@ require("dotenv").config();
 const PORT = process.env.PORT || 5001;
 
 const app = express();
-setupRoutes(app);
 app.use(express.json());
+setupRoutes(app);
 
 
 app.get("/api", (req, res) => {

@@ -7,19 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model marques {
-  idmarques Int     @id 
-  name      String? @db.VarChar(45)
-  image    Bytes?  @db.Blob
-  model     model?
-}
-
 model model {
-  idmodel  Int       @id
+  idmodel  Int       @id @default(autoincrement())
   name     String?   @db.VarChar(45)
   date     DateTime? @db.DateTime(0)
   moteur   String?   @db.VarChar(45)
   chevaux  String?   @db.VarChar(45)
   histoire String?   @db.VarChar(255)
-  marques  marques   @relation(fields: [idmodel], references: [idmarques], onDelete: NoAction, onUpdate: NoAction, map: "idmarques")
+  marque   marque    @relation(fields: [idmodel], references: [idmarques], onDelete: NoAction, onUpdate: NoAction, map: "idmarques")
+}
+
+model marque {
+  idmarques Int     @id @default(autoincrement())
+  name      String? @db.VarChar(45)
+  image     Bytes?  @db.Blob
+  model     model?
 }
