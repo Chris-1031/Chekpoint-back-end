@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start:server": "node app.js",
+    "start:server:watch": "nodemon -e yaml,js,json app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
