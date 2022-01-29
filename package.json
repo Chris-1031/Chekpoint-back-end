@@ -11,6 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.2"
+    "@prisma/client": "^3.8.1",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "prisma": "^3.8.1"
   }
 }
