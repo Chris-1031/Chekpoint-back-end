@@ -19,7 +19,7 @@ model model {
 
 model marque {
   idmarques Int     @id @default(autoincrement())
-  name      String? @db.VarChar(45)
-  image     Bytes?  @db.Blob
+  name      String @db.VarChar(45)
+  link     String?  @db.VarChar(255)
   model     model?
 }
