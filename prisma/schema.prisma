@@ -7,19 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model model {
-  idmodel  Int       @id @default(autoincrement())
-  name     String?   @db.VarChar(45)
-  date     DateTime? @db.DateTime(0)
-  moteur   String?   @db.VarChar(45)
-  chevaux  String?   @db.VarChar(45)
-  histoire String?   @db.VarChar(255)
-  marque   marque    @relation(fields: [idmodel], references: [idmarques], onDelete: NoAction, onUpdate: NoAction, map: "idmarques")
+model marques {
+  idmarques Int      @id @default(autoincrement())
+  name      String?  @db.VarChar(45)
+  link      String?  @db.VarChar(45)
+  models    models[]
 }
 
-model marque {
-  idmarques Int     @id @default(autoincrement())
-  name      String @db.VarChar(45)
-  link     String?  @db.VarChar(255)
-  model     model?
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model models {
+  idModels  Int       @id @default(autoincrement())
+  name      String?   @db.VarChar(45)
+  date      DateTime? @db.DateTime(0)
+  moteur    String?   @db.VarChar(45)
+  chevaux   String?   @db.VarChar(45)
+  link      String?   @db.VarChar(45)
+  idmarques Int?
+  marques   marques?  @relation(fields: [idmarques], references: [idmarques], onDelete: NoAction, onUpdate: NoAction, map: "idMarques")
+
+  @@index([idModels], map: "idMarques_idx")
+  @@index([idmarques], map: "idMarques_idx1")
 }

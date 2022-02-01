@@ -4,7 +4,11 @@ const prisma = new PrismaClient();
 
 async function handleGetModel(req, res, next) {
   try {
-    const model = await prisma.model.findMany();
+    const model = await prisma.models.findMany({
+      include: {
+        marques: true
+      }
+    });
     res.json(model).status(200);
   } catch (err) {
     console.error(err);
@@ -15,8 +19,11 @@ async function handleGetModel(req, res, next) {
 async function handleGetModelById(req, res, next) {
   const { id } = req.params;
   try {
-    const modelId = await prisma.model.findUnique({
-      where: { id: Number(id) },
+    const modelId = await prisma.models.findUnique({
+      where: { idModels: Number(id) },
+     include: {
+       marques: true
+     }
     });
     if (modelId) res.json(modelId).status(200);
     else res.status(404).send("Model not found");
@@ -28,16 +35,15 @@ async function handleGetModelById(req, res, next) {
 
 async function handlePostModel(req, res, next) {
   try {
-    const createmodel = await prisma.model.create({
+    const createmodel = await prisma.models.create({
       data: { ...req.body },
     });
     res.json(createmodel).status(201);
     console.log("model saved in BDD");
   } catch (err) {
     console.error(err);
-    if (err === "DUPLICATE_EMAIL")
-      res.status(409).json({ message: "This email is already used" });
-    else if (err === "INVALID_DATA") res.status(422).send("ERROR");
+   
+     if (err === "INVALID_DATA") res.status(422).send("ERROR");
     else res.status(500).send("Error saving the model");
     next(err);
   }
@@ -46,8 +52,8 @@ async function handlePostModel(req, res, next) {
 async function handlePutModel(req, res, next) {
   const { id } = req.params;
   try {
-    const model = await prisma.model.update({
-      where: { id: Number(id) },
+    const model = await prisma.models.update({
+      where: { idModels: Number(id) },
       data: { ...req.body },
     });
     res.json(model);
@@ -61,8 +67,8 @@ async function handlePutModel(req, res, next) {
 async function handleDeleteModel(req, res, next) {
   const { id } = req.params;
   try {
-    const deletemodel = await prisma.model.findUnique({
-      where: { id: Number(id) },
+    const deletemodel = await prisma.models.findUnique({
+      where: { idModels: Number(id) },
     });
     if (deletemodel) res.status(200).send("🎉 Model deleted!");
     else res.status(404).send("Model not found");

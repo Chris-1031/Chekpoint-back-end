@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 async function handleGetMarque(req, res, next) {
   try {
-    const marque = await prisma.marque.findMany();
+    const marque = await prisma.marques.findMany();
     res.json(marque).status(200);
   } catch (err) {
     console.error(err);
@@ -15,8 +15,8 @@ async function handleGetMarque(req, res, next) {
 async function handleGetMarqueById(req, res, next) {
   const { id } = req.params;
   try {
-    const marqueId = await prisma.marque.findUnique({
-      where: { id: Number(id) },
+    const marqueId = await prisma.marques.findUnique({
+      where: { idMarques: Number(id) },
     });
     if (marqueId) res.json(marqueId).status(200);
     else res.status(404).send("Marque not found");
@@ -28,16 +28,13 @@ async function handleGetMarqueById(req, res, next) {
 
 async function handlePostMarque(req, res, next) {
   try {
-    const createmarque = await prisma.marque.create({
+    const createmarque = await prisma.marques.create({
       data: { ...req.body },
     });
     res.json(createmarque).status(201);
     console.log("marque saved in BDD");
   } catch (err) {
-    console.error(err);
-    if (err === "DUPLICATE_EMAIL")
-      res.status(409).json({ message: "This email is already used" });
-    else if (err === "INVALID_DATA") res.status(422).send("ERROR");
+    if (err === "INVALID_DATA") res.status(422).send("ERROR");
     else res.status(500).send("Error saving the marque");
     next(err);
   }
@@ -46,8 +43,8 @@ async function handlePostMarque(req, res, next) {
 async function handlePutMarque(req, res, next) {
   const { id } = req.params;
   try {
-    const marque = await prisma.marque.update({
-      where: { id: Number(id) },
+    const marque = await prisma.marques.update({
+      where: { idMarques: Number(id) },
       data: { ...req.body },
     });
     res.json(marque);
@@ -61,8 +58,8 @@ async function handlePutMarque(req, res, next) {
 async function handleDeleteMarque(req, res, next) {
   const { id } = req.params;
   try {
-    const deletemarque = await prisma.marque.findUnique({
-      where: { id: Number(id) },
+    const deletemarque = await prisma.marques.findUnique({
+      where: { idMarques: Number(id) },
     });
     if (deletemarque) res.status(200).send("🎉 Marque deleted!");
     else res.status(404).send("Marque not found");
