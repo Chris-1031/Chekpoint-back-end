@@ -67,7 +67,7 @@ async function handlePutModel(req, res, next) {
 async function handleDeleteModel(req, res, next) {
   const { id } = req.params;
   try {
-    const deletemodel = await prisma.models.findUnique({
+    const deletemodel = await prisma.models.delete({
       where: { idModels: Number(id) },
     });
     if (deletemodel) res.status(200).send("🎉 Model deleted!");
