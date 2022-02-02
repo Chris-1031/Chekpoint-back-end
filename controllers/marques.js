@@ -16,7 +16,7 @@ async function handleGetMarqueById(req, res, next) {
   const { id } = req.params;
   try {
     const marqueId = await prisma.marques.findUnique({
-      where: { idMarques: Number(id) },
+      where: { idmarques: Number(id) },
     });
     if (marqueId) res.json(marqueId).status(200);
     else res.status(404).send("Marque not found");
@@ -44,7 +44,7 @@ async function handlePutMarque(req, res, next) {
   const { id } = req.params;
   try {
     const marque = await prisma.marques.update({
-      where: { idMarques: Number(id) },
+      where: { idmarques: Number(id) },
       data: { ...req.body },
     });
     res.json(marque);
@@ -58,8 +58,8 @@ async function handlePutMarque(req, res, next) {
 async function handleDeleteMarque(req, res, next) {
   const { id } = req.params;
   try {
-    const deletemarque = await prisma.marques.findUnique({
-      where: { idMarques: Number(id) },
+    const deletemarque = await prisma.marques.delete({
+      where: { idmarques: Number(id) },
     });
     if (deletemarque) res.status(200).send("🎉 Marque deleted!");
     else res.status(404).send("Marque not found");

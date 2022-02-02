@@ -10,7 +10,7 @@ datasource db {
 model marques {
   idmarques Int      @id @default(autoincrement())
   name      String?  @db.VarChar(45)
-  link      String?  @db.VarChar(45)
+  link      String?  @db.VarChar(255)
   models    models[]
 }
 
@@ -21,7 +21,7 @@ model models {
   date      DateTime? @db.DateTime(0)
   moteur    String?   @db.VarChar(45)
   chevaux   String?   @db.VarChar(45)
-  link      String?   @db.VarChar(45)
+  link      String?   @db.VarChar(255)
   idmarques Int?
   marques   marques?  @relation(fields: [idmarques], references: [idmarques], onDelete: NoAction, onUpdate: NoAction, map: "idMarques")
 
